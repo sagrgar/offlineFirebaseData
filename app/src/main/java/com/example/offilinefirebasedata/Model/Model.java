@@ -1,9 +1,8 @@
-package com.example.offilinefirebasedata;
+package com.example.offilinefirebasedata.Model;
+
+import com.example.offilinefirebasedata.Utils.Constants;
 
 public class Model {
-
-    public static final int TABLE1 = 1;
-    public static final int TABLE2 = 2;
 
     private int viewType;
     private String name;
@@ -12,18 +11,18 @@ public class Model {
     private String address;
     private int table2Id;
 
-    public Model(int viewType, String name, String email, int userid) {
+    public Model(String name, String email, int userid) {
         this.name = name;
         this.email = email;
         this.userid = userid;
-        this.viewType = viewType;
+        viewType = Constants.TABLE1;
     }
 
-    public Model(int viewType, String name, int table2Id, String address) {
+    public Model(String name, int table2Id, String address) {
         this.name = name;
         this.address = address;
         this.table2Id = table2Id;
-        this.viewType = viewType;
+        viewType = Constants.TABLE2;
 
     }
 

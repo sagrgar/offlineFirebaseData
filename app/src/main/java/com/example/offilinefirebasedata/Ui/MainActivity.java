@@ -1,28 +1,27 @@
-package com.example.offilinefirebasedata;
+package com.example.offilinefirebasedata.Ui;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.example.offilinefirebasedata.Model.Model;
+import com.example.offilinefirebasedata.R;
+import com.example.offilinefirebasedata.Adapters.RecyclerViewAdapter;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -44,17 +43,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         table3_btn = findViewById(R.id.table3_btn);
         table4_btn = findViewById(R.id.table4_btn);
 
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewAdapter = new RecyclerViewAdapter(this, userArrayList);
+        recyclerView.setAdapter(recyclerViewAdapter);
+
         table1_btn.setOnClickListener(this);
         table2_btn.setOnClickListener(this);
         table3_btn.setOnClickListener(this);
         table4_btn.setOnClickListener(this);
 
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerViewAdapter = new RecyclerViewAdapter(this, userArrayList);
-
         fs = FirebaseFirestore.getInstance();
-
     }
 
     @Override
@@ -86,7 +85,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     for (DocumentChange documentChange : value.getDocumentChanges()) {
                         switch (documentChange.getType()) {
                             case ADDED:
-//                                userArrayList.clear();
                                 Model model = documentChange.getDocument().toObject(Model.class);
                                 userArrayList.add(model);
                                 recyclerViewAdapter.setModel(userArrayList);
